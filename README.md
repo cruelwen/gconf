@@ -1,4 +1,4 @@
-gconf
+Gconf
 =====
 
-gconf
+Generate config
