@@ -1,4 +1,4 @@
-require 'erb'
+require 'erubis'
 require 'yaml'
 
 class Gconf
@@ -23,6 +23,16 @@ class Gconf
         @full_value[node][item] = get_value(node,item)
       end
     end
+  end
+
+  def eval_file(file, tag = "default")
+    input = File.read(file)
+    eval_string(input,tag)
+  end
+  
+  def eval_string(string, tag = "default")
+    eruby = Erubis::Eruby.new(string,:pattern=>'<[\$%] [\$%]>')
+    eruby.evaluate(@full_value[tag])
   end
 
   private

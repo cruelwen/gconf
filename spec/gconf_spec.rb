@@ -53,15 +53,37 @@ HD_CONF
     @gc.full_value["hz01"]["idc"].should == "all"
   end
 
-  it "should evaluate it" do
+  it "should evaluate string" do
     @gc.raw_value = {
       "default" => {"idc" => "all"},
       "yf" => {"idc" => "yf"},
       "hz00" => {"idc" => "hz00"},
     }
+    tmpfile = "/tmp/eval_file"
+    str = <<HD_EVALFILE
+<$=@idc$>
+<%=@idc%>
+HD_EVALFILE
     @gc.gen_full_value
-    @gc.evaluate
-
+    @gc.eval_string(str,"yf00").should == "yf\nyf\n"
+    @gc.eval_string(str).should == "all\nall\n"
   end
 
+  it "should evaluate file" do
+    @gc.raw_value = {
+      "default" => {"idc" => "all"},
+      "yf" => {"idc" => "yf"},
+      "hz00" => {"idc" => "hz00"},
+    }
+    tmpfile = "/tmp/eval_file"
+    file = File.new(tmpfile, "w")
+    file.puts <<HD_EVALFILE
+<$=@idc$>
+<%=@idc%>
+HD_EVALFILE
+    file.flush
+    @gc.gen_full_value
+    @gc.eval_file(tmpfile,"yf00").should == "yf\nyf\n"
+    @gc.eval_file(tmpfile).should == "all\nall\n"
+  end
 end
