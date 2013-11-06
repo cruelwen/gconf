@@ -6,7 +6,7 @@ require 'sinatra/base'
 require 'json'
 require File.join(home,'lib','gconf')
 
-class Gc_srv < Sinatra::Base
+class Gconf_server < Sinatra::Base
   post '/gconf' do
     request.body.rewind
     body = JSON.parse request.body.read
