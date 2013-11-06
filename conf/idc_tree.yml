@@ -16,3 +16,4 @@ bj: all
 hz00: hz
 hz01: hz
 hz: all
+all: default
