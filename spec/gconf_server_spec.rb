@@ -1,17 +1,31 @@
-require './a'
-require 'test/unit'
+#!/usr/bin/env ruby
+
+require 'gconf_server'
 require 'rack/test'
 
-class MyAppTest < Test::Unit::TestCase
+describe 'Gconf_server' do
   include Rack::Test::Methods
 
   def app
-    MyApp
+    Gconf_server
   end
 
-  def test_my_default
+  it "Get / should say hello" do
     get '/'
-    assert_equal 'hello', last_response.body
+    last_response.status.should == 200
+    last_response.body.should == 'Hello Gconf!'
+  end
+
+  it "Post /hi/:name should say hi to name" do
+    post '/hi',"name" => "Melissa"
+    last_response.status.should == 200
+    last_response.body.should == 'Hi Melissa'
+  end
+
+  it "Post /gconf should say return solution to name" do
+    post '/gconf','value' => {"default" => {"idc" => "all"},"yf" => {"idc" => "yf"},"hz00" => {"idc" => "hz00"}}, 'tag' => 'hz01', 'text' => '<%=@idc%>\n<$=@idc$>\n'
+    last_response.status.should == 200
+    last_response.body.should == 'all\\nall\\n'
   end
 
 end
