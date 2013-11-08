@@ -30,13 +30,13 @@ describe Gconf do
 
     genfile("/tmp/conf_template","<$=@idc$>")
 
-    ret = `./bin/gconf_console /tmp/conf_template -t /tmp/idc_tree -v /tmp/raw_value -g hz01`
+    ret = `./bin/gconf /tmp/conf_template -t /tmp/idc_tree -v /tmp/raw_value -g hz01`
     ret.should == "all\n"
-    ret = `./bin/gconf_console /tmp/conf_template -t /tmp/idc_tree -v /tmp/raw_value`
+    ret = `./bin/gconf /tmp/conf_template -t /tmp/idc_tree -v /tmp/raw_value`
     ret.should == "all\n"
-    ret = `./bin/gconf_console /tmp/conf_template -t /tmp/idc_tree -v /tmp/raw_value -g hz00`
+    ret = `./bin/gconf /tmp/conf_template -t /tmp/idc_tree -v /tmp/raw_value -g hz00`
     ret.should == "hz00\n"
-    ret = `./bin/gconf_console /tmp/conf_template -t /tmp/idc_tree -v /tmp/raw_value -g yf00`
+    ret = `./bin/gconf /tmp/conf_template -t /tmp/idc_tree -v /tmp/raw_value -g yf00`
     ret.should == "yf\n"
   end
 end
